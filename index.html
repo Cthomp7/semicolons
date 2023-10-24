@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="application/javascript" src="/libs/ethers-5.6.umd.min.js"></script>
+    <script type="application/javascript" src="semicolons.js" defer></script>
+    <script type="application/javascript" src="abi.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="setUsername">
+        <div id="welcome" class="fullscreen-txt">
+            <h1>Welcome, <br><span class="user"></span></h1>
+        </div>
+        <div id="createUsername" class="fullscreen-txt">
+            <h1>Let's create a username!</h1>
+            <input id="username" type="text">
+            <button onclick="setUsername()">submit</button>
+        </div>
+    </div>
+    <div id="gotUsername">
+        <div id="welcome-back" class="fullscreen-txt">
+            <h1>Welcome Back, <br><span class="user"></span></h1>
+        </div>
+    </div>
+    <div id="semicolonMarket">
+        <div class="title">
+            <h1>Sem;colon Market</h1>
+            <h2>Welcome to the Sem;colon Market! Here you can purchase sem;colons and view other's collections.
+            </h2>
+            <button onclick="purchase()">Purchase Sem;colon</button>
+        </div>
+        <div id="collections">
+            <div class="collector">
+                <p class="owner"></p>
+                <div class="house"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
