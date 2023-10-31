@@ -8,6 +8,8 @@ let USERNAME;
 
 main();
 
+console.log("hello world!")
+
 async function main() {
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
     await provider.send("eth_requestAccounts", []);
@@ -22,7 +24,7 @@ async function main() {
             element.textContent = USERNAME
         }
         let welcome = document.getElementById('welcome-back')
-        welcome.style.display = "inherit"
+        welcome.style.display = "flex"
         welcome.addEventListener('click', function () {
             const element = this
             element.style.animation = `fade-out 1s ease-in-out`
@@ -38,14 +40,14 @@ async function main() {
             element.textContent = walletAddress
         }
         let welcome = document.getElementById('welcome')
-        welcome.style.display = "inherit"
+        welcome.style.display = "flex"
         welcome.addEventListener('click', function () {
             const element = this
             element.style.animation = `fade-out 1s ease-in-out`
             element.style.opacity = '0'
             setTimeout(function () {
                 element.style.display = 'none'
-                document.getElementById('createUsername').style.display = 'inherit'
+                document.getElementById('createUsername').style.display = 'flex'
             }, 1000)
         })
     }
@@ -69,7 +71,6 @@ function hideByID(id) {
     element.style.opacity = '0'
     setTimeout(function () {
         element.style.display = 'none'
-        document.getElementById('createUsername').style.display = 'inherit'
     }, 1000) 
 }
 
@@ -81,6 +82,7 @@ async function displaySemicolonMarket () {
     document.getElementById('semicolonMarket').style.display = 'block'
     const users = await contract.getAllUsernames()
     const usersData = []
+    // generateAdoptableSemicolons()
 
     for (let u = 0; u < users.length; u++) {
         const username = users[0]
@@ -96,6 +98,9 @@ async function displaySemicolonMarket () {
         const collectorDiv = document.createElement('div');
         collectorDiv.className = 'collector';
 
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'content';
+
         const ownerParagraph = document.createElement('p');
         ownerParagraph.className = 'owner';
         ownerParagraph.textContent = owner.username; 
@@ -110,10 +115,49 @@ async function displaySemicolonMarket () {
         }
         houseDiv.textContent = semicolons
 
-        collectorDiv.appendChild(houseDiv);
-        collectorDiv.appendChild(ownerParagraph);
+        collectorDiv.appendChild(contentDiv)
+        contentDiv.appendChild(ownerParagraph)
+        contentDiv.appendChild(houseDiv)
 
         const collectionsDiv = document.getElementById('collections');
         collectionsDiv.appendChild(collectorDiv);
     });
+}
+
+async function generateAdoptableSemicolons() {
+    try {
+        const data = await fetchJSON('data.json')
+        console.log(data)
+        for (let i = 0; i < 5; i++) {
+            const name = data.name[ran(data.name.length)]
+            const personality = data.personality[ran(data.personality.length)]
+            const color = `rgb(${ran(255)},${ran(255)},${ran(255)})`
+
+            document.getElementById('adoptionCenter').innerHTML +=
+            `<div class="cage">
+                <p class="semicolon" style="color:${color}">;<p>
+                <div class="info">
+                    <p class="name">${name}</p>
+                    <p class="personality">${personality}</p>
+                </div>
+            </div>`
+        }
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+    }
+}
+
+function fetchJSON(file) {
+    return fetch(file)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok.');
+        }
+        return response.json(); // Parse the response as JSON
+      });
+  }
+
+function ran(num) {
+    const number = Math.floor(Math.random() * num)
+    return number
 }
