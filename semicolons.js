@@ -82,7 +82,7 @@ async function displaySemicolonMarket () {
     document.getElementById('semicolonMarket').style.display = 'block'
     const users = await contract.getAllUsernames()
     const usersData = []
-    // generateAdoptableSemicolons()
+    generateAdoptableSemicolons()
 
     for (let u = 0; u < users.length; u++) {
         const username = users[0]
